@@ -43,7 +43,7 @@ class DataLoader {
         data_[(idx + 1) % 2]->ReloadInfo();
         if (success) {
           wcount_[(idx + 1) % 2].store(0, std::memory_order_relaxed);
-          index_.store((idx + 1) % 2, std::memory_order_seq_cst);
+          index_.store((idx + 1) % 2, std::memory_order_acq_rel);
           int expected = 0;
           while (!wcount_[idx].compare_exchange_weak(expected, -1, std::memory_order_relaxed)) {
           }
